@@ -1,71 +1,73 @@
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.ensignprojects.iban;
 
 import java.math.BigInteger;
 
 /**
- *
- * @author jurrian
+ * This class can validate International Bank Account Numbers (hereafter: IBAN). 
+ * It is also able to calculate the checkdigits of an IBAN
+ * @author Jurrian Fahner
  */
 public class Iban {
     private Iban() {} // Disable class initialisation, no private members, only static methods.
     
+    // The IBAN length information is derived from 
+    // https://www.dnb.no/en/business/transaction-banking/international-payments/example-iban.html
     private static int getValidLength(String countryCode) {
         int lengthIban = 0;
         
         switch(countryCode) {
+            
             case "NO": lengthIban = 15; break;
+                
             case "BE": lengthIban = 16; break;
 
-            case "DK": case "FO": case "FI": case "GL": 
-            case "NL": lengthIban = 18; break;
+            case "DK": case "FI": case "FO": 
+            case "GL": case "NL": 
+                lengthIban = 18; break;
                 
             case "MK": 
             case "SI": lengthIban = 19; break;
                 
-            case "AT": case "BA": case "KZ": case "XK": case "EE": case "LT": 
-            case "LU": lengthIban = 20; break;
+            case "AT": case "BA": case "EE": 
+            case "KZ": case "LT": 
+            case "LU": case "XK": 
+                lengthIban = 20; break;
                 
-            case "HR": case "LV": case "CR": case "LI": 
-            case "CH": lengthIban = 21; break;
+            case "CH": case "CR": case "HR": 
+            case "LI": case "LV": 
+                lengthIban = 21; break;
                 
-            case "BH": case "BG": case "GE": case "DE": case "GB": 
-            case "IE": case "IM": case "JE": case "ME": 
-            case "RS": lengthIban = 22; break;
+            case "BH": case "BG": case "DE": case "GB": case "GE": 
+            case "IE": case "IM": case "JE": case "ME": case "RS": 
+                lengthIban = 22; break;
                 
-            case "GI": case "IL":
-            case "AE": lengthIban = 23; break;
+            case "AE": case "GI": case "IL":            
+                lengthIban = 23; break;
                 
-            case "AD": case "CZ": case "MD": case "PK": case "RO": 
-            case "SA": case "SK": case "ES": case "SE": case "VG":
-            case "TN": lengthIban = 24; break;
+            case "AD": case "CZ": case "ES": case "MD": case "PK": 
+            case "RO": case "SA": case "SK": case "SE": case "TN": 
+            case "VG":
+                lengthIban = 24; break;
                 
-            case "ST":
-            case "PT": lengthIban = 25; break;
+            case "ST": case "PT": 
+                lengthIban = 25; break;
                 
-            case "IS": 
-            case "TR": lengthIban = 26; break;
+            case "IS": case "TR": 
+                lengthIban = 26; break;
                 
-            case "FR": case "GR": case "IT": case "MC": case "MR":
-            case "SM": lengthIban = 27; break;
+            case "FR": case "GR": case "IT": 
+            case "MC": case "MR": case "SM": 
+                lengthIban = 27; break;
                 
-            case "AL": case "AZ": case "DO": case "GT": 
-            case "CY": case "HU": case "LB": 
-            case "PL": lengthIban = 28; break;
+            case "AL": case "AZ": case "CY": case "DO": 
+            case "GT": case "HU": case "LB": case "PL": 
+                lengthIban = 28; break;
                 
-            case "BR":
-            case "PS": lengthIban = 29; break;
+            case "BR": case "PS": case "QA": 
+                lengthIban = 29; break;
                 
-            case "QA": lengthIban = 29; break;
-                
-            case "KW": case "MU":    
-            case "JO": lengthIban = 30; break;
+            case "KW": case "MU": case "JO": 
+                lengthIban = 30; break;
                 
             case "MT": lengthIban = 31; break;        
                 
@@ -151,19 +153,4 @@ public class Iban {
         return result;
     }
     
-    public static void main(String[] args) {
-        try {
-            System.out.println(validate("NL91ABNA0417164300"));
-            System.out.println(validate("QA58DOHB00001234567890ABCDEFG"));
-//            System.out.println(validate("QA58DOHB0000d1234567890ABCDEF"));
-            
-            System.out.println("NL91ABNA0417164300:: " + generateValidCheckDigits("NL91ABNA0417164300"));
-
-        } catch (IbanLengthException ible) {
-            System.out.println("Error occurred in length");
-            ible.printStackTrace();
-        }
-        
-        System.out.println("charcode a: " + ((int) 'a'));
-    }
 }
